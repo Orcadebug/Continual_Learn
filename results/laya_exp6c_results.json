@@ -1,0 +1,134 @@
+[
+  {
+    "strategy": "greedy",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.075,
+    "avg_steps": 55.7,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.009,
+    "repeat_visit_rate": 0.0,
+    "oscillations_per_episode": 0.0
+  },
+  {
+    "strategy": "sample_t1",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.425,
+    "avg_steps": 42.5,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.009,
+    "repeat_visit_rate": 0.383,
+    "oscillations_per_episode": 7.17
+  },
+  {
+    "strategy": "sample_t05",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.375,
+    "avg_steps": 44.7,
+    "mean_entropy": 1.385,
+    "mean_top2_margin": 0.019,
+    "repeat_visit_rate": 0.397,
+    "oscillations_per_episode": 7.72
+  },
+  {
+    "strategy": "sample_t2",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.45,
+    "avg_steps": 41.5,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.005,
+    "repeat_visit_rate": 0.379,
+    "oscillations_per_episode": 6.75
+  },
+  {
+    "strategy": "greedy_rotavg",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.075,
+    "avg_steps": 55.7,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.004,
+    "repeat_visit_rate": 0.0,
+    "oscillations_per_episode": 0.0
+  },
+  {
+    "strategy": "greedy_history",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.075,
+    "avg_steps": 55.7,
+    "mean_entropy": 1.381,
+    "mean_top2_margin": 0.044,
+    "repeat_visit_rate": 0.0,
+    "oscillations_per_episode": 0.0
+  },
+  {
+    "strategy": "greedy",
+    "world": "keydoor",
+    "episodes": 40,
+    "success_rate": 0.075,
+    "avg_steps": 55.6,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.006,
+    "repeat_visit_rate": 0.0,
+    "oscillations_per_episode": 0.0
+  },
+  {
+    "strategy": "sample_t1",
+    "world": "keydoor",
+    "episodes": 40,
+    "success_rate": 0.325,
+    "avg_steps": 49.4,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.006,
+    "repeat_visit_rate": 0.466,
+    "oscillations_per_episode": 8.88
+  },
+  {
+    "strategy": "sample_t05",
+    "world": "keydoor",
+    "episodes": 40,
+    "success_rate": 0.35,
+    "avg_steps": 47.4,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.012,
+    "repeat_visit_rate": 0.449,
+    "oscillations_per_episode": 8.53
+  },
+  {
+    "strategy": "sample_t2",
+    "world": "keydoor",
+    "episodes": 40,
+    "success_rate": 0.325,
+    "avg_steps": 49.4,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.003,
+    "repeat_visit_rate": 0.466,
+    "oscillations_per_episode": 8.85
+  },
+  {
+    "strategy": "greedy_rotavg",
+    "world": "keydoor",
+    "episodes": 40,
+    "success_rate": 0.075,
+    "avg_steps": 55.6,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.004,
+    "repeat_visit_rate": 0.0,
+    "oscillations_per_episode": 0.0
+  },
+  {
+    "strategy": "greedy_history",
+    "world": "keydoor",
+    "episodes": 40,
+    "success_rate": 0.075,
+    "avg_steps": 55.6,
+    "mean_entropy": 1.384,
+    "mean_top2_margin": 0.026,
+    "repeat_visit_rate": 0.0,
+    "oscillations_per_episode": 0.0
+  }
+]

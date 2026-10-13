@@ -1,0 +1,244 @@
+{
+  "RANDOM": {
+    "empty": {
+      "success_rate": 0.36666666666666664,
+      "avg_steps": 46.3
+    },
+    "keydoor": {
+      "success_rate": 0.3333333333333333,
+      "avg_steps": 46.06666666666667
+    },
+    "switch": {
+      "success_rate": 0.3333333333333333,
+      "avg_steps": 46.53333333333333
+    }
+  },
+  "FROZEN": {
+    "empty": {
+      "success_rate": 0.3,
+      "avg_steps": 47.03333333333333
+    },
+    "keydoor": {
+      "success_rate": 0.3,
+      "avg_steps": 48.53333333333333
+    }
+  },
+  "RL": {
+    "final_eval": {
+      "P1_empty": 0.333,
+      "P2_keydoor": 0.417,
+      "P3_switch_rulechange": 0.583
+    },
+    "retention_empty_after_P2": 0.417,
+    "retention_empty_after_P4": 0.333,
+    "curve": [
+      {
+        "phase": "P1_empty",
+        "episodes_in_phase": 25,
+        "train_success_last25": 0.48,
+        "eval_success": 0.75,
+        "eval_avg_steps": 34.0
+      },
+      {
+        "phase": "P1_empty",
+        "episodes_in_phase": 50,
+        "train_success_last25": 0.6,
+        "eval_success": 0.0,
+        "eval_avg_steps": 60.0
+      },
+      {
+        "phase": "P1_empty",
+        "episodes_in_phase": 75,
+        "train_success_last25": 0.44,
+        "eval_success": 0.333,
+        "eval_avg_steps": 41.2
+      },
+      {
+        "phase": "P1_empty",
+        "episodes_in_phase": 80,
+        "train_success_last25": 0.48,
+        "eval_success": 0.333,
+        "eval_avg_steps": 47.0
+      },
+      {
+        "phase": "P2_keydoor",
+        "episodes_in_phase": 25,
+        "train_success_last25": 0.44,
+        "eval_success": 0.25,
+        "eval_avg_steps": 56.0
+      },
+      {
+        "phase": "P2_keydoor",
+        "episodes_in_phase": 50,
+        "train_success_last25": 0.4,
+        "eval_success": 0.25,
+        "eval_avg_steps": 48.8
+      },
+      {
+        "phase": "P2_keydoor",
+        "episodes_in_phase": 75,
+        "train_success_last25": 0.64,
+        "eval_success": 0.583,
+        "eval_avg_steps": 38.7
+      },
+      {
+        "phase": "P2_keydoor",
+        "episodes_in_phase": 100,
+        "train_success_last25": 0.4,
+        "eval_success": 0.417,
+        "eval_avg_steps": 50.3
+      },
+      {
+        "phase": "P3_switch_rulechange",
+        "episodes_in_phase": 25,
+        "train_success_last25": 0.44,
+        "eval_success": 0.417,
+        "eval_avg_steps": 51.1
+      },
+      {
+        "phase": "P3_switch_rulechange",
+        "episodes_in_phase": 50,
+        "train_success_last25": 0.52,
+        "eval_success": 0.417,
+        "eval_avg_steps": 42.8
+      },
+      {
+        "phase": "P3_switch_rulechange",
+        "episodes_in_phase": 75,
+        "train_success_last25": 0.52,
+        "eval_success": 0.25,
+        "eval_avg_steps": 50.2
+      },
+      {
+        "phase": "P3_switch_rulechange",
+        "episodes_in_phase": 80,
+        "train_success_last25": 0.44,
+        "eval_success": 0.583,
+        "eval_avg_steps": 36.9
+      },
+      {
+        "phase": "P4_return_empty",
+        "episodes_in_phase": 25,
+        "train_success_last25": 0.56,
+        "eval_success": 0.333,
+        "eval_avg_steps": 50.8
+      },
+      {
+        "phase": "P4_return_empty",
+        "episodes_in_phase": 40,
+        "train_success_last25": 0.48,
+        "eval_success": 0.75,
+        "eval_avg_steps": 38.8
+      }
+    ]
+  },
+  "RL+REPLAY": {
+    "final_eval": {
+      "P1_empty": 0.333,
+      "P2_keydoor": 0.333,
+      "P3_switch_rulechange": 0.167
+    },
+    "retention_empty_after_P2": 0.333,
+    "retention_empty_after_P4": 0.25,
+    "curve": [
+      {
+        "phase": "P1_empty",
+        "episodes_in_phase": 25,
+        "train_success_last25": 0.28,
+        "eval_success": 0.083,
+        "eval_avg_steps": 55.3
+      },
+      {
+        "phase": "P1_empty",
+        "episodes_in_phase": 50,
+        "train_success_last25": 0.32,
+        "eval_success": 0.083,
+        "eval_avg_steps": 55.9
+      },
+      {
+        "phase": "P1_empty",
+        "episodes_in_phase": 75,
+        "train_success_last25": 0.36,
+        "eval_success": 0.5,
+        "eval_avg_steps": 39.5
+      },
+      {
+        "phase": "P1_empty",
+        "episodes_in_phase": 80,
+        "train_success_last25": 0.36,
+        "eval_success": 0.333,
+        "eval_avg_steps": 47.3
+      },
+      {
+        "phase": "P2_keydoor",
+        "episodes_in_phase": 25,
+        "train_success_last25": 0.4,
+        "eval_success": 0.417,
+        "eval_avg_steps": 41.1
+      },
+      {
+        "phase": "P2_keydoor",
+        "episodes_in_phase": 50,
+        "train_success_last25": 0.44,
+        "eval_success": 0.417,
+        "eval_avg_steps": 39.8
+      },
+      {
+        "phase": "P2_keydoor",
+        "episodes_in_phase": 75,
+        "train_success_last25": 0.4,
+        "eval_success": 0.417,
+        "eval_avg_steps": 48.7
+      },
+      {
+        "phase": "P2_keydoor",
+        "episodes_in_phase": 100,
+        "train_success_last25": 0.52,
+        "eval_success": 0.333,
+        "eval_avg_steps": 47.9
+      },
+      {
+        "phase": "P3_switch_rulechange",
+        "episodes_in_phase": 25,
+        "train_success_last25": 0.36,
+        "eval_success": 0.25,
+        "eval_avg_steps": 48.3
+      },
+      {
+        "phase": "P3_switch_rulechange",
+        "episodes_in_phase": 50,
+        "train_success_last25": 0.48,
+        "eval_success": 0.25,
+        "eval_avg_steps": 51.7
+      },
+      {
+        "phase": "P3_switch_rulechange",
+        "episodes_in_phase": 75,
+        "train_success_last25": 0.44,
+        "eval_success": 0.167,
+        "eval_avg_steps": 54.9
+      },
+      {
+        "phase": "P3_switch_rulechange",
+        "episodes_in_phase": 80,
+        "train_success_last25": 0.44,
+        "eval_success": 0.167,
+        "eval_avg_steps": 52.9
+      },
+      {
+        "phase": "P4_return_empty",
+        "episodes_in_phase": 25,
+        "train_success_last25": 0.44,
+        "eval_success": 0.333,
+        "eval_avg_steps": 47.6
+      },
+      {
+        "phase": "P4_return_empty",
+        "episodes_in_phase": 40,
+        "train_success_last25": 0.52,
+        "eval_success": 0.25,
+        "eval_avg_steps": 53.0
+      }
+    ]
+  }
+}

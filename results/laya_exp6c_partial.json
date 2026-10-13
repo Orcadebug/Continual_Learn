@@ -1,0 +1,49 @@
+[
+  {
+    "strategy": "greedy",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.075,
+    "avg_steps": 55.7,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.009,
+    "repeat_visit_rate": 0.0,
+    "oscillations_per_episode": 0.0
+  },
+  {
+    "strategy": "sample_t1",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.425,
+    "avg_steps": 42.5,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.009,
+    "repeat_visit_rate": 0.383,
+    "oscillations_per_episode": 7.17
+  },
+  {
+    "strategy": "sample_t05",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.375,
+    "avg_steps": 44.7,
+    "mean_entropy": 1.385,
+    "mean_top2_margin": 0.019,
+    "repeat_visit_rate": 0.397,
+    "oscillations_per_episode": 7.72
+  },
+  {
+    "strategy": "sample_t2",
+    "world": "empty",
+    "episodes": 40,
+    "success_rate": 0.45,
+    "avg_steps": 41.5,
+    "mean_entropy": 1.386,
+    "mean_top2_margin": 0.005,
+    "repeat_visit_rate": 0.379,
+    "oscillations_per_episode": 6.75
+  },
+  {
+    "note": "extraction crashed on greedy_rotavg (CPU/CUDA device bug in the averaging accumulator); rerun from the saved /content/exp6c_policy.pt queued"
+  }
+]
