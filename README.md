@@ -6,7 +6,7 @@ questions in a single forward pass — learn autonomously in an unfamiliar
 environment, keep what it learns, adapt to unwarned rule changes, and stay
 competent at old and new skills at once?
 
-**Governing criterion (Sai's):** not peak score — become good, stay good,
+**Governing criterion (Orca's):** not peak score — become good, stay good,
 adapt to a change it wasn't warned about, and remain competent at both the
 new and the still-valid old situations.
 
