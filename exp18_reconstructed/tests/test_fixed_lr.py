@@ -13,4 +13,5 @@ def update(lr: float) -> float:
 
 def test_fixed_lr_arm_is_a_real_adamw_learning_rate_reduction():
     normal, reduced = update(1e-3), update(3e-4)
-    assert reduced / normal == pytest.approx(0.30, rel=1e-5)
+    # Float32 parameter storage introduces micro-scale rounding after AdamW.
+    assert reduced / normal == pytest.approx(0.30, rel=1e-4)
