@@ -111,7 +111,7 @@ def parameter_digest(params: list[torch.nn.Parameter]) -> str:
 
 
 class Lifetime:
-    def __init__(self, config: dict[str, Any], arm: str, seed: int, output: Path, pilot: bool):
+    def __init__(self, config: dict[str, Any], arm: str, seed: int, output: Path, pilot: bool, resume: Path | None = None):
         if arm not in config["arms"]:
             raise ValueError(f"unknown arm {arm}")
         self.config, self.arm, self.seed, self.output, self.pilot = config, arm, seed, output, pilot
@@ -141,6 +141,31 @@ class Lifetime:
         self.protected: list[MemoryItem] = []
         self.success_lengths: dict[int, list[int]] = {i: [] for i in range(4)}
         self.state = RunState()
+        self.phase_evaluations: list[dict[str, Any]] = []
+        if resume:
+            self.restore(resume)
+
+    def restore(self, path: Path) -> None:
+        """Restore all mutable training state at an episode checkpoint boundary."""
+        saved = torch.load(path, map_location="cpu", weights_only=False)
+        if saved["config"] != self.config or saved["arm"] != self.arm or saved["seed"] != self.seed:
+            raise ValueError("checkpoint does not belong to this frozen run")
+        self.model.load_state_dict(saved["model"])
+        self._value_head().load_state_dict(saved["value_head"])
+        self.optimizer.load_state_dict(saved["optimizer"])
+        for optimizer_state in self.optimizer.state.values():
+            for key, value in optimizer_state.items():
+                if torch.is_tensor(value):
+                    optimizer_state[key] = value.to(DEVICE)
+        self.memory = deque(saved["memory"])
+        self.protected = saved["protected"]
+        self.success_lengths = saved["success_lengths"]
+        self.state = RunState(**saved["run_state"])
+        self.phase_evaluations = saved.get("phase_evaluations", [])
+        self.rng.setstate(saved["python_rng"])
+        torch.set_rng_state(saved["torch_rng"])
+        if torch.cuda.is_available() and saved["cuda_rng"] is not None:
+            torch.cuda.set_rng_state_all(saved["cuda_rng"])
 
     def encode(self, text: str) -> Any:
         return legacy.encode_state(self.tokenizer, text)
@@ -292,7 +317,7 @@ class Lifetime:
                  "optimizer": self.optimizer.state_dict(), "memory": list(self.memory), "protected": self.protected,
                  "success_lengths": self.success_lengths, "run_state": asdict(self.state), "python_rng": self.rng.getstate(),
                  "torch_rng": torch.get_rng_state(), "cuda_rng": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
-                 "config": self.config, "arm": self.arm, "seed": self.seed}
+                 "phase_evaluations": self.phase_evaluations, "config": self.config, "arm": self.arm, "seed": self.seed}
         atomic_torch_save(state, self.checkpoint_path)
 
     def run(self) -> dict[str, Any]:
@@ -300,9 +325,12 @@ class Lifetime:
         if self.pilot:
             phases = [[name, kind, min(episodes, 10)] for name, kind, episodes in phases]
         for phase_index, (name, kind, episodes) in enumerate(phases):
+            if phase_index < self.state.phase_index:
+                continue
             recent, admitted, rejected = deque(maxlen=25), 0, 0
-            phase_items: list[MemoryItem] = []
-            for episode in range(episodes):
+            phase_items: list[MemoryItem] = [item for item in self.memory if item.phase_index == phase_index]
+            start_episode = self.state.episode_index if phase_index == self.state.phase_index else 0
+            for episode in range(start_episode, episodes):
                 world, pairs, done = legacy.World(kind, self.rng), [], False
                 positions = [world.agent]
                 while not done:
@@ -328,14 +356,22 @@ class Lifetime:
                                                   "door_used": bool(door_used), "admitted": bool(succeeded and update_count >= 0 and admitted),
                                                   "recent_success": sum(recent) / len(recent), "admitted_count": admitted,
                                                   "rejected_count": rejected, "memory_entries": len(self.memory), "optimizer_updates": update_count})
+                self.state.phase_index, self.state.episode_index = phase_index, episode + 1
                 if (episode + 1) % 25 == 0 or episode + 1 == episodes:
                     self.save()
             self.protected.extend(phase_items[-300:])
+            observed = ("empty",) if phase_index == 0 else ("empty", "keydoor") if phase_index == 1 else ("empty", "keydoor", "switch")
+            phase_eval = {world: self.eval_world(world, self.config["evaluation"]["episodes_per_world"], self.config["evaluation"]["seed_base"])
+                          for world in observed}
+            self.phase_evaluations.append({"phase": name, "evaluation": phase_eval})
+            self.state.phase_index, self.state.episode_index = phase_index + 1, 0
+            self.save()
         evaluation = {kind: self.eval_world(kind, self.config["evaluation"]["episodes_per_world"], self.config["evaluation"]["seed_base"])
                       for kind in ("empty", "keydoor", "switch")}
         self.save()
         result = {"study": "Exp18-Reconstructed", "arm": self.arm, "seed": self.seed,
-                  "pilot": self.pilot, "evaluation": evaluation, "checkpoint": str(self.checkpoint_path)}
+                  "pilot": self.pilot, "phase_evaluations": self.phase_evaluations,
+                  "evaluation": evaluation, "checkpoint": str(self.checkpoint_path)}
         (self.output / "result.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
         return result
 
@@ -347,9 +383,10 @@ def main() -> None:
     parser.add_argument("--seed", type=int, required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--pilot", action="store_true")
+    parser.add_argument("--resume", type=Path)
     args = parser.parse_args()
     config = json.loads(Path(args.config).read_text())
-    print(json.dumps(Lifetime(config, args.arm, args.seed, Path(args.output), args.pilot).run(), indent=2), flush=True)
+    print(json.dumps(Lifetime(config, args.arm, args.seed, Path(args.output), args.pilot, args.resume).run(), indent=2), flush=True)
 
 
 if __name__ == "__main__":
