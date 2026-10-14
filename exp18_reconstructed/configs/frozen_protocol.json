@@ -1,0 +1,44 @@
+{
+  "study": "Exp18-Reconstructed",
+  "status": "preregistered_before_validation",
+  "base_revision": "feaab1ce5bba11350781e64a5887409bf5192334",
+  "model_checkpoint": "convaiinnovations/laya",
+  "arms": {
+    "normal": {"controller": "none", "learning_rate_multiplier": 1.0},
+    "fixed_lr": {"controller": "none", "learning_rate_multiplier": 0.3},
+    "valve": {"controller": "agem_projection", "learning_rate_multiplier": 1.0}
+  },
+  "seeds": [1, 2, 3, 4, 5],
+  "phases": [
+    ["P1_empty", "empty", 80],
+    ["P2_keydoor", "keydoor", 100],
+    ["P3_switch_rulechange", "switch", 100],
+    ["P4_return_empty", "empty", 40]
+  ],
+  "optimizer": {
+    "name": "AdamW",
+    "encoder_lr": 0.00001,
+    "non_encoder_lr": 0.001,
+    "weight_decay": 0.0,
+    "gradient_clip_norm": 1.0
+  },
+  "replay": {
+    "memory_capacity": 4000,
+    "protected_samples_per_update": 8,
+    "batch_size": 32,
+    "rounds_per_episode": 5,
+    "current_phase_weight": 3.0,
+    "reference_batch_size": 8,
+    "reference_min_age_updates": 1
+  },
+  "evaluation": {
+    "episodes_per_world": 48,
+    "seed_base": 707000,
+    "policy": "greedy",
+    "weights_frozen": true
+  },
+  "primary_outcome": "mean final simultaneous held-out battery across empty, keydoor, switch",
+  "success_criterion": "Valve must exceed both controls across paired lifetimes while not being slower to P3 recovery than fixed_lr, with diagnostics showing actual intervention and non-worsening reference loss.",
+  "non_privileged_controller_inputs": ["experience_id", "update_age", "stored_observation", "stored_action"],
+  "forbidden_controller_inputs": ["phase_name", "world_kind", "rule_identifier", "heldout_evaluation"]
+}
