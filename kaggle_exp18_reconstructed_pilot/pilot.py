@@ -9,18 +9,18 @@ REVISION = "14ae503a40c214a0410ed69757900c934e6a2fc9"
 ROOT = Path("/kaggle/working/Continual_Learn")
 OUT = Path("/kaggle/working/exp18_reconstructed_pilot")
 
-def run(*command: str) -> None:
+def run(*command: str, cwd: Path | None = None) -> None:
     print("+", " ".join(command), flush=True)
-    subprocess.run(command, check=True)
+    subprocess.run(command, check=True, cwd=cwd)
 
 run(sys.executable, "-m", "pip", "install", "-q", "laya==0.4.6", "pytest")
 run("git", "clone", "https://github.com/Orcadebug/Continual_Learn.git", str(ROOT))
 run("git", "-C", str(ROOT), "checkout", "--detach", REVISION)
-run(sys.executable, "-m", "pytest", "exp18_reconstructed/tests", "-q")
+run(sys.executable, "-m", "pytest", "exp18_reconstructed/tests", "-q", cwd=ROOT)
 
 for arm in ("normal", "fixed_lr", "valve"):
     run(sys.executable, "-m", "exp18_reconstructed.runner", "--arm", arm, "--seed", "1",
-        "--pilot", "--output", str(OUT / arm))
+        "--pilot", "--output", str(OUT / arm), cwd=ROOT)
 
 summaries = {}
 for arm in ("normal", "fixed_lr", "valve"):
