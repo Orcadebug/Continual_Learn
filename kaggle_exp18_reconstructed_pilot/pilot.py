@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-REVISION = "14ae503a40c214a0410ed69757900c934e6a2fc9"
+REVISION = "2c2de6a84f687360dc7613aeddd23bedac67a307"
 ROOT = Path("/kaggle/working/Continual_Learn")
 OUT = Path("/kaggle/working/exp18_reconstructed_pilot")
 
